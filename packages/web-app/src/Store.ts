@@ -14,6 +14,7 @@ import { NativeStore } from './modules/machine/NativeStore'
 import { RefreshService } from './modules/data-refresh'
 import { featureFlags } from './FeatureFlags'
 import { SaladBowlStore } from './modules/salad-bowl'
+import { HomeStore } from './modules/home/HomeStore'
 
 //Forces all changes to state to be from an action
 configure({ enforceActions: 'always' })
@@ -41,6 +42,7 @@ export class RootStore {
   public readonly profile: ProfileStore
   public readonly ui: UIStore
   public readonly referral: ReferralStore
+  public readonly home: HomeStore
   public readonly native: NativeStore
   public readonly refresh: RefreshService
   public readonly saladBowl: SaladBowlStore
@@ -60,6 +62,7 @@ export class RootStore {
     this.profile = new ProfileStore(this, axios)
     this.ui = new UIStore(this)
     this.referral = new ReferralStore(this, axios)
+    this.home = new HomeStore(this, axios)
     this.refresh = new RefreshService(this)
     this.analytics = new AnalyticsStore(this)
 
@@ -110,5 +113,9 @@ export class RootStore {
     this.referral.currentReferral = undefined
     this.analytics.trackLogout()
     this.saladBowl.stop()
+  }
+
+  loadData = () =>{
+    this.home.loadBannerInfo()
   }
 }
