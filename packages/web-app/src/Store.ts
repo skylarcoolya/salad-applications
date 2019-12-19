@@ -114,8 +114,4 @@ export class RootStore {
     this.analytics.trackLogout()
     this.saladBowl.stop()
   }
-
-  loadData = () =>{
-    this.home.loadBannerInfo()
-  }
 }
